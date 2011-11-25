@@ -1,0 +1,53 @@
+<?php
+
+
+
+class MultianchorTestCase extends DrupalUnitTestCase {
+
+
+
+public static function getInfo() {
+
+  return array(
+    'name' => 'Multianhor tests',
+    'description' => '',
+    'group' => 'Multianchor',
+  );
+
+}
+
+
+function testParseCache() {
+  
+  $urlStr = variable_get('multianchors');
+  $anchors = parse_cache($urlStr, $stat);
+  $result = getParse($stat);
+  
+  $message = 'Проверяем текущий текст на сайте в форме, должен вернуть TRUE';  
+  $this->assertTrue($result, $message);
+  
+  $urlStr = 'multiahgfhdfghdfghfgdkfj;gksdfgjsdklnchors';
+  $anchors = parse_cache($urlStr, $stat);
+  $result = getParse($stat);
+  
+  $message = 'Посылаем неккоректный текст, должен вернуть FALSE';  
+  $this->assertTrue($result, $message);
+  
+  $urlStr =   
+    "//1\n
+    # http://3w-site.ru/creation\n 
+    Разработано Три-В, создание сайтов для людей | Профессиональное создание сайтов :5\n 
+    Создание сайтов для роботов | Наши сайты для роботов также очень сильно нравятся людям:30\n 
+    //2\n
+    #http://bash.org.ru/3\n 
+    Создание сайтов для людей и роботов | Равноправие машин и людей - отсутствие восстаний роботов  :4\n
+    жизнь 1 | title:100\n
+    Жизнь 2 | Ссылочка: 15";
+  $anchors = parse_cache($urlStr, $stat);
+  $result = getParse($stat);
+  drupal_set_message($urlStr);
+  $message = 'Посылаем корректный текст, должен вернуть TRUE';  
+  $this->assertTrue($result, $message);
+}
+
+}

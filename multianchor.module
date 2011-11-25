@@ -269,3 +269,13 @@ function parse_cache($url_str, &$stats) {
  
   return $anchors;   
 }
+
+// Для теста
+function getParse($stats) {  
+  if ($stats[0]!='0') {
+    $result = true; 
+  } else {
+      $result = false;
+    }
+  return $result;
+}
